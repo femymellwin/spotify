@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Bloomberg Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-header: #000000;
+  --color-border: #1e1e1e;
+  --color-accent: #ff6600;
+  --color-cyan: #00bfff;
+  --color-text: #c8c8c8;
+  --color-muted: #555555;
+  --color-positive: #00d084;
+  --color-negative: #ff3333;
+  --color-warning: #ffd700;
+}
+
+/* ─── Base Reset ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Bloomberg Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff8533;
+}
+::-webkit-scrollbar-corner {
+  background: var(--color-surface);
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────────────────── */
+.live-pulse {
+  animation: pulse-live 1.5s ease-in-out infinite;
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    #1a1a1a 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease-in;
+}
+
+/* Widget title bars */
+.widget-title {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Horizontal scroll for World News */
+.horizontal-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-surface);
+  scroll-behavior: smooth;
+}
+
+/* News article links */
+.news-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.news-link:hover .news-headline {
+  color: var(--color-accent);
+}
+
+/* Truncate to N lines */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Remove Next.js default styles */
+#__next {
+  height: 100%;
+}
+
+/* ─── React Grid Layout — Bloomberg resize handles ──────────────────────────── */
+
+/* Override default handle appearance to match Bloomberg aesthetic */
+.react-grid-item > .react-resizable-handle {
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 20;
+}
+
+.react-grid-item:hover > .react-resizable-handle,
+.react-grid-item.resizing > .react-resizable-handle {
+  opacity: 1;
+}
+
+/* Corner handles — orange accent tick marks */
+.react-grid-item > .react-resizable-handle::after {
+  border-color: var(--color-accent) !important;
+  width: 6px !important;
+  height: 6px !important;
+}
+
+/* Dragging state */
+.react-grid-item.react-draggable-dragging {
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+  outline: 1px solid var(--color-accent);
+  transition: none !important;
+}
+
+/* Resizing state */
+.react-grid-item.resizing {
+  z-index: 100;
+  outline: 1px solid var(--color-accent);
+}
+
+/* Drop placeholder */
+.react-grid-item.react-grid-placeholder {
+  background: rgba(255, 102, 0, 0.08) !important;
+  border: 1px dashed var(--color-accent) !important;
+  opacity: 1 !important;
+}
